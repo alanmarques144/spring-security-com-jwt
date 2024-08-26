@@ -1,6 +1,7 @@
 package com.alanmarques144.spring_security_jwt.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.alanmarques144.spring_security_jwt.dto.UsuarioDto;
@@ -13,6 +14,8 @@ public class UsuarioServiceImpl implements UsuarioService{
     
     @Autowired
     private UsuarioRepository usuarioRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public UsuarioDto salvar(UsuarioDto usuarioDto) {
@@ -23,7 +26,9 @@ public class UsuarioServiceImpl implements UsuarioService{
             throw new RuntimeException("Usuario ja existe!");
         }
 
-        Usuario entity = new Usuario(usuarioDto.nome(), usuarioDto.login(), usuarioDto.senha());
+        String passwordHash = passwordEncoder.encode(usuarioDto.senha());
+
+        Usuario entity = new Usuario(usuarioDto.nome(), usuarioDto.login(), passwordHash);
         Usuario novoUsuario = usuarioRepository.save(entity);
         return new UsuarioDto(novoUsuario.getNome(), novoUsuario.getLogin(),novoUsuario.getSenha());
     }
