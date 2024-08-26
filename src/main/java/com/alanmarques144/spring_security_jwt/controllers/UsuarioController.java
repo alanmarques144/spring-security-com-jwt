@@ -17,9 +17,14 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
-    @GetMapping
-    private String getOk(){
-        return "Ok!";
+    @GetMapping("/admin")
+    private String getAdmin(){
+        return "Permissao de administrador!";
+    }
+
+    @GetMapping("/user")
+    private String getUser(){
+        return "Permissao de usuario!";
     }
 
     @PostMapping
