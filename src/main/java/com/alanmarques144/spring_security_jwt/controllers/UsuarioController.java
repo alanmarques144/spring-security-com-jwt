@@ -17,14 +17,15 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
+    @GetMapping
+    private String getOk(){
+        return "Ok!";
+    }
+
     @PostMapping
     private UsuarioDto salvar(@RequestBody UsuarioDto usuarioDto){
         
         return usuarioService.salvar(usuarioDto);
     }
 
-    @GetMapping
-    private String getOk(){
-        return "Ok!";
-    }
 }
